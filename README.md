@@ -1,8 +1,13 @@
 # Execute Python files from within C# projects
 
-This repo consists of class which provides user with access to simple methods such as:
+`IronPython` nuget package has to be installed.
+```
+dotnet add package IronPython
+```
 
-- `RunPythonFile()` - Simply executing Python file
+This repo consists of class `RunPython.cs` which provides user with access to simple methods such as:
+
+- `RunPythonFile()` - Executing Python file
 - `RunPythonFileGetVar(string variable)` - Executing Python script, and getting `variable`
 - `RunPythonFileGetVars(string[] variables)` - Executing Python script, and getting multiple `variables`
 - `RunPythonFileArgs(List<string> args)` - Executing Python script with `args` arguments 
