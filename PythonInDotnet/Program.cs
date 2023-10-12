@@ -5,12 +5,13 @@ namespace PythonInDotnet
     {
         static void Main(string[] args)
         {
-            string pathToPYFile = "PathToYourPythonFile";
+            string pathToPYFile = "Path to your Python file";
             List<string> arguments = new List<string>
             {
                 "List", "Of", "Your", "Arguments"
             };
             RunPython rp = new RunPython(pathToPYFile);
+            rp.RunPythonFile();
         }
     }
 }

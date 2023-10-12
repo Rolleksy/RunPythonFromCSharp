@@ -1,5 +1,5 @@
 ﻿using IronPython.Hosting;
-
+using Microsoft.Scripting.Hosting;
 
 namespace PythonInDotnet
 {
@@ -18,25 +18,22 @@ namespace PythonInDotnet
     public class RunPython
     {
         string pathToFile = string.Empty;
-
+        ScriptScope? scope;
+        ScriptEngine engine;
         public RunPython(string pathToFile)
         {
             this.pathToFile = pathToFile;
+            engine = Python.CreateEngine();
+            scope = engine.CreateScope();
         }
 
         public void RunPythonFile()
         {
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
-
             engine.ExecuteFile(pathToFile, scope);
         }
 
         public dynamic RunPythonFileGetVar(string variable)
         {
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
-
             engine.ExecuteFile(pathToFile, scope);
 
             dynamic result = scope.GetVariable(variable);
@@ -44,9 +41,6 @@ namespace PythonInDotnet
         }
         public dynamic RunPythonFileGetVars(string[] variables)
         {
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
-
             engine.ExecuteFile(pathToFile, scope);
             dynamic[] dynamics = new dynamic[variables.Length];
             int i = 0;
@@ -60,8 +54,6 @@ namespace PythonInDotnet
 
         public void RunPythonFileArgs(List<string> args)
         {
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
             engine.GetSysModule().SetVariable("argv", args.ToArray());
             engine.ExecuteFile(pathToFile, scope);
 
@@ -69,8 +61,6 @@ namespace PythonInDotnet
 
         public dynamic RunPythonFileArgsGetVar(List<string> args, string variable)
         {
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
             engine.GetSysModule().SetVariable("argv", args.ToArray());
             engine.ExecuteFile(pathToFile, scope);
             dynamic result = scope.GetVariable(variable);
@@ -79,8 +69,6 @@ namespace PythonInDotnet
 
         public dynamic RunPythonFileArgsGetVars(List<string> args, string[] variables)
         {
-            var engine = Python.CreateEngine();
-            var scope = engine.CreateScope();
             engine.GetSysModule().SetVariable("argv", args.ToArray());
             engine.ExecuteFile(pathToFile, scope);
             dynamic[] dynamics = new dynamic[variables.Length];
